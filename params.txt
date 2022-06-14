@@ -1,0 +1,9 @@
+Re=9000
+Nx=30
+Ny=30
+Nz=300
+dt=0.000001
+gravity=0.0000001
+pressure_time=0.000001
+pressure_calculation_precision=0.00000001
+velocity_calculation_precision=0.0000001
