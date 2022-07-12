@@ -5,47 +5,44 @@
 using std::vector;
 
 
-int Nx = 60;
-int Ny = 60;
-int Nz = 30;
+int Nx = 30;
+int Ny = 30;
+int Nz = 1;
+const int k = 1;
 
+float Re = 2;
 
-float Re = 3000;
-
-float dx = (float) 2 / Nx;
-float dy = (float) 2 / Ny;
-float dz = (float) 1 / Nz;
+float dx = (float) 1 / Nx;
+float dy = (float) 1 / Ny;
+float dz = 1; //(float) 1 / Nz;
 
 float dt = 0.001;
+float pressure_pseudo_time = 0.0001;
 
-float pressure_part =
-        (dx * dx * dy * dy * dz * dz) / (2 * (dy * dy * dz * dz + dx * dx * dz * dz + dx * dx * dy * dy));
+//float pressure_part =
+//        (dx * dx * dy * dy * dz * dz) / (2 * (dy * dy * dz * dz + dx * dx * dz * dz + dx * dx * dy * dy));
 
-float gravity = 0.000001;
+float gravity = 0.00000;
 
-float velocity_calculation_precision = 0.0000000001;
+float velocity_calculation_precision = 0.00001;
 float pressure_calculation_precision = 0.000001;
 
-vector<vector<vector<double> > > u(Nx, vector<vector<double> >(Ny, vector<double>(Nz)));
-vector<vector<vector<double> > > u_auxilliary(Nx, vector<vector<double> >(Ny, vector<double>(Nz)));
+vector<vector<double>  > u;
+vector<vector<double>  > u_auxilliary;
 
-vector<vector<vector<double> > > v(Nx, vector<vector<double> >(Ny, vector<double>(Nz)));
-vector<vector<vector<double> > > v_auxilliary(Nx, vector<vector<double> >(Ny, vector<double>(Nz)));
+vector<vector<double> > v;
+vector<vector<double> > v_auxilliary;
 
-vector<vector<vector<double> > > w(Nx, vector<vector<double> >(Ny, vector<double>(Nz)));
-vector<vector<vector<double> > > w_auxilliary(Nx, vector<vector<double> >(Ny, vector<double>(Nz)));
-
-vector<vector<vector<double> > > p(Nx, vector<vector<double> >(Ny, vector<double>(Nz)));
-vector<vector<vector<double> > > p_previous(Nx, vector<vector<double> >(Ny, vector<double>(Nz)));
+vector<vector<double> >  p;
+vector<vector<double> >  p_previous;
 
 // for convergence check
-vector<vector<vector<double> > > u_previous(Nx, vector<vector<double> >(Ny, vector<double>(Nz)));
-vector<vector<vector<double> > > v_previous(Nx, vector<vector<double> >(Ny, vector<double>(Nz)));
-vector<vector<vector<double> > > w_previous(Nx, vector<vector<double> >(Ny, vector<double>(Nz)));
+vector<vector<double> > u_previous;
+vector<vector<double> > v_previous;
 
 
 const float mod_u = 1.0;
 const float mod_v = 1.0;
 const float mod_w = 1.0;
 
-float pressure_time = 0.001;
+int debug = 1; // 1 stands for True, 0 - for False
