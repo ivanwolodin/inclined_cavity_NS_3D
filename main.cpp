@@ -41,9 +41,9 @@ int main() {
 //            (step < 100000 and step % 10000 == 0)) {
 //            output_all_fields(step);
 //        }
-        if ((step < 10000 and step % 100 == 0) or (step < 1000000 and step % 1000 == 0) or step % 1000000 == 0) {
-            output_averaged_veloicty(step);
-            output_all_fields(step);
-        }
+        if ((step < 10000 and step % 100 == 0) or (step < 1000000 and step % 1000 == 0) or step % 1000000 == 0){
+  		output_averaged_veloicty(step);
+		output_all_fields(step);
+	} 
     }
 }

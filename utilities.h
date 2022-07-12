@@ -40,9 +40,9 @@ void initial_distribution() {
     for (int j = 0; j < Ny; j++) {
         for (int i = 0; i < Nx; i++) {
 //            for (int k = 0; k < Nz; k++) {
-            p[i][j] = ((1 / (1 - (float) Ny)) * (float) j + 1) * 1;
-            u[i][j] = ((1 / (1 - (float) Ny)) * (float) j + 1) * 1;
-            v[i][j] = ((1 / (1 - (float) Ny)) * (float) j + 1) * 1;
+            p[i][j] = 0;//((1 / (1 - (float) Ny)) * (float) j + 1) * 1;
+            u[i][j] = 0;//((1 / (1 - (float) Ny)) * (float) j + 1) * 1;
+            v[i][j] = 0;//((1 / (1 - (float) Ny)) * (float) j + 1) * 1;
 //                w[i][j] = ((1 / (1 - (float) Ny)) * (float) j + 1) * 1;
             // ((1/ / (1 - (float) Nz)) * (float) k + 1) * 0.1;
 //                a * k * k + b * k;
@@ -232,7 +232,7 @@ bool read_parameters() {
 
         if (beforeEqual == "Nx") {
             Nx = std::stoi(afterEqual);
-            dx = (float) 1 / Nx;
+            dx = (float) 5 / Nx;
         }
 
         if (beforeEqual == "Ny") {
@@ -340,7 +340,6 @@ void output_poisson_solution_dynamics(int mainStep, int poissonStep) {
 
 }
 
-
 void output_averaged_veloicty(int mainStep) {
 
     time_t t = time(0);   // get time now
@@ -350,13 +349,13 @@ void output_averaged_veloicty(int mainStep) {
     strftime(buffer, 80, "%d-%m %H.%M", now);
 
     ofstream myfile;
-    myfile.open(string("res/") + buffer + " step=" + mainStep + " " + "averaged_velocity");
+    myfile.open(string("res/") + buffer + " step=" + to_string(mainStep) + " " + "averaged_velocity");
 
     if (myfile.is_open()) {
 
-
+       
         myfile << "mainStep=" << mainStep << endl;
-
+        
 //        for (int i = 0; i < X; i++) {
 //            myfile << "i=" << i << "  "<< endl;
 //            for (int j = 0; j < Y; j++) {
@@ -370,7 +369,7 @@ void output_averaged_veloicty(int mainStep) {
                 sum = sum + v[i][j];
             }
             sum = (sum / Nx );
-            myfile <<"j = "<< j << " "<< sum << " " << endl;
+	    myfile <<"j = "<< j << " "<< sum << " " << endl;
         }
         myfile.close();
     } else cout << "Unable to open file";
