@@ -15,7 +15,7 @@ int main() {
 //        return -1;
 //    }
 
-    initial_distribution();
+    initial_distribution(); // impement reading initial distribution
 
     int step = 1;
     output_all_fields(step);
@@ -47,7 +47,7 @@ int main() {
             output_all_fields(step);
         }
 
-        if (step % 10000000 == 0) {
+        if (step % 1000000000 == 0) {
             return 0;
         }
 

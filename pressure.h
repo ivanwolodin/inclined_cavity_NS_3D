@@ -11,12 +11,21 @@ using std::to_string;
 void calculate_Nx_pressure() {
     for (int j = 1; j < Ny - 1; j++) {
         for (int k = 1; k < Nz - 1; k++) {
-            p[Nx - 1][j][k] = pressure_part * ((p_previous[Nx - 2][j][k] + p_previous[1][j][k]) / (dx * dx) +
-                                               (p_previous[Nx - 1][j - 1][k] + p_previous[Nx - 1][j + 1][k]) /
-                                               (dy * dy) +
-                                               (p_previous[Nx - 1][j][k - 1] + p_previous[Nx - 1][j][k + 1]) /
-                                               (dz * dz)) -
-                              VELOCITY_PART * (pressure_part / dt) * (
+            p[Nx - 1][j][k] = p_previous[Nx - 1][j][k] +
+                              pressure_time * (
+                                      (p_previous[Nx - 2][j][k] - 2 * p_previous[Nx - 1][j][k] +
+                                       p_previous[1][j][k]) /
+                                      (dx * dx) +
+
+                                      (p_previous[Nx - 1][j - 1][k] - 2 * p_previous[Nx - 1][j][k] +
+                                       p_previous[Nx - 1][j + 1][k]) /
+                                      (dy * dy) +
+
+                                      (p_previous[Nx - 1][j][k - 1] - 2 * p_previous[Nx - 1][j][k] +
+                                       p_previous[Nx - 1][j][k + 1]) /
+                                      (dz * dz)
+                              ) -
+                              VELOCITY_PART * (pressure_time / dt) * (
                                       (u_auxilliary[1][j][k] - u_auxilliary[Nx - 2][j][k]) / (2 * dx) +
                                       (v_auxilliary[Nx - 1][j + 1][k] - v_auxilliary[Nx - 1][j - 1][k]) / (2 * dy) +
                                       (w_auxilliary[Nx - 1][j][k + 1] - w_auxilliary[Nx - 1][j][k - 1]) / (2 * dz)
@@ -29,15 +38,24 @@ void calculate_Nx_pressure() {
 void calculate_Ny_pressure() {
     for (int i = 1; i < Nx - 1; i++) {
         for (int k = 1; k < Nz - 1; k++) {
-            p[i][Ny - 1][k] =
-                    pressure_part * ((p_previous[i - 1][Ny - 1][k] + p_previous[i + 1][Ny - 1][k]) / (dx * dx) +
-                                     (p_previous[i][Ny - 2][k] + p_previous[i][1][k]) / (dy * dy) +
-                                     (p_previous[i][Ny - 1][k - 1] + p_previous[i][Ny - 1][k + 1]) / (dz * dz)) -
-                    VELOCITY_PART * (pressure_part / dt) * (
-                            (u_auxilliary[i + 1][Ny - 1][k] - u_auxilliary[i - 1][Ny - 1][k]) / (2 * dx) +
-                            (v_auxilliary[i][1][k] - v_auxilliary[i][Ny - 2][k]) / (2 * dy) +
-                            (w_auxilliary[i][Ny - 1][k + 1] - w_auxilliary[i][Ny - 1][k - 1]) / (2 * dz)
-                    );
+            p[i][Ny - 1][k] = p_previous[i][Ny - 1][k] +
+                              pressure_time * (
+                                      (p_previous[i - 1][Ny - 1][k] - 2 * p_previous[i][Ny - 1][k] +
+                                       p_previous[i + 1][Ny - 1][k]) /
+                                      (dx * dx) +
+
+                                      (p_previous[i][Ny - 2][k] - 2 * p_previous[i][Ny - 1][k] + p_previous[i][1][k]) /
+                                      (dy * dy) +
+
+                                      (p_previous[i][Ny - 1][k - 1] - 2 * p_previous[i][Ny - 1][k] +
+                                       p_previous[i][Ny - 1][k + 1]) /
+                                      (dz * dz)
+                              ) -
+                              VELOCITY_PART * (pressure_time / dt) * (
+                                      (u_auxilliary[i + 1][Ny - 1][k] - u_auxilliary[i - 1][Ny - 1][k]) / (2 * dx) +
+                                      (v_auxilliary[i][1][k] - v_auxilliary[i][Ny - 2][k]) / (2 * dy) +
+                                      (w_auxilliary[i][Ny - 1][k + 1] - w_auxilliary[i][Ny - 1][k - 1]) / (2 * dz)
+                              );
         }
     }
 }
@@ -45,17 +63,20 @@ void calculate_Ny_pressure() {
 
 void calculate_Ny_Nx_edge_pressure() {
     for (int k = 1; k < Nz - 1; k++) {
-        p[Nx - 1][Ny - 1][k] = pressure_part * ((p_previous[Nx - 2][Ny - 1][k] + p_previous[1][Ny - 1][k]) / (dx * dx) +
-                                                (p_previous[Nx - 1][Ny - 2][k] + p_previous[Nx - 1][1][k]) / (dy * dy) +
-                                                (p_previous[Nx - 1][Ny - 1][k - 1] +
-                                                 p_previous[Nx - 1][Ny - 1][k + 1]) / (dz * dz)) -
-                               VELOCITY_PART * (pressure_part / dt) * (
-                                       (u_auxilliary[1][Ny - 1][k] - u_auxilliary[Nx - 2][Ny - 1][k]) / (2 * dx) +
-                                       (v_auxilliary[Nx - 1][1][k] - v_auxilliary[Nx - 1][Ny - 2][k]) / (2 * dy) +
-                                       (w_auxilliary[Nx - 1][Ny - 1][k + 1] - w_auxilliary[Nx - 1][Ny - 1][k - 1]) /
-                                       (2 * dz)
-                               );
-
+        p[Nx - 1][Ny - 1][k] = p_previous[Nx - 1][Ny - 1][k] +
+                     pressure_time * (
+                             (p_previous[Nx - 2][Ny - 1][k] - 2 * p_previous[Nx - 1][Ny - 1][k] + p_previous[1][Ny - 1][k]) /
+                             (dx * dx) +
+                             (p_previous[Nx - 1][Ny - 2][k] - 2 * p_previous[Nx - 1][Ny - 1][k] + p_previous[Nx - 1][1][k]) /
+                             (dy * dy) +
+                             (p_previous[Nx - 1][Ny - 1][k - 1] - 2 * p_previous[Nx - 1][Ny - 1][k] + p_previous[Nx - 1][Ny - 1][k + 1]) /
+                             (dz * dz)
+                     ) -
+                     VELOCITY_PART * (pressure_time / dt) * (
+                             (u_auxilliary[1][Ny - 1][k] - u_auxilliary[Nx - 2][Ny - 1][k]) / (2 * dx) +
+                             (v_auxilliary[Nx - 1][1][k] - v_auxilliary[Nx - 1][Ny - 2][k]) / (2 * dy) +
+                             (w_auxilliary[Nx - 1][Ny - 1][k + 1] - w_auxilliary[Nx - 1][Ny - 1][k - 1]) / (2 * dz)
+                     );
     }
 
     // spread to all edges
@@ -118,15 +139,15 @@ void calculate_pressure(int mainStep) {
                 for (int k = 1; k < Nz - 1; k++) {
 //			cout<<i<<" " <<j<<" "<<k<<endl; 
                     p[i][j][k] = p_previous[i][j][k] +
-                              pressure_time * (
-                                      (p_previous[i - 1][j][k] - 2 * p_previous[i][j][k] + p_previous[i + 1][j][k]) /
-                                      (dx * dx) +
-                                      (p_previous[i][j - 1][k] - 2 * p_previous[i][j][k] + p_previous[i][j + 1][k]) /
-                                      (dy * dy) +
-                                      (p_previous[i][j][k - 1] - 2 * p_previous[i][j][k] + p_previous[i][j][k + 1]) /
-                                      (dz* dz)
-                              ) -
-                              VELOCITY_PART * (pressure_time / dt) * (
+                                 pressure_time * (
+                                         (p_previous[i - 1][j][k] - 2 * p_previous[i][j][k] + p_previous[i + 1][j][k]) /
+                                         (dx * dx) +
+                                         (p_previous[i][j - 1][k] - 2 * p_previous[i][j][k] + p_previous[i][j + 1][k]) /
+                                         (dy * dy) +
+                                         (p_previous[i][j][k - 1] - 2 * p_previous[i][j][k] + p_previous[i][j][k + 1]) /
+                                         (dz * dz)
+                                 ) -
+                                 VELOCITY_PART * (pressure_time / dt) * (
                                          (u_auxilliary[i + 1][j][k] - u_auxilliary[i - 1][j][k]) / (2 * dx) +
                                          (v_auxilliary[i][j + 1][k] - v_auxilliary[i][j - 1][k]) / (2 * dy) +
                                          (w_auxilliary[i][j][k + 1] - w_auxilliary[i][j][k - 1]) / (2 * dz)
@@ -143,7 +164,7 @@ void calculate_pressure(int mainStep) {
         if (check_convergence(p, p_previous, pressure_calculation_precision)) {
 //            cout << "Poisson calculated" << step << endl;
             //tooutput_to_file(" p_final.txt", to_string(step), p);
-	output_poisson_solution_dynamics(mainStep, step);
+            output_poisson_solution_dynamics(mainStep, step);
             return;
         }
 
