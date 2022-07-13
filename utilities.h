@@ -3,6 +3,7 @@
 #include "constants.h"
 #include "iostream"
 #include <fstream>
+#include <sstream>
 
 using std::cout;
 using std::endl;
@@ -10,6 +11,7 @@ using std::string;
 using std::ofstream;
 using std::to_string;
 using std::ifstream;
+using std:: stringstream;
 
 void zero_values() {
     for (int i = 0; i < Nx; i++) {
@@ -34,25 +36,44 @@ void zero_values() {
     }
 }
 
+void read_data_into_array(vector<vector<vector<double> > > &array, string fileName){
+    ifstream inputFile(fileName);        // Input file stream object
+    int i, j, k;
+    double value;
+    while (inputFile >> i >> j >>k >> value){
+        array[i][j][k] = value;
+    }
+}
+
 
 void initial_distribution() {
     zero_values();
-    float a = 1 / (((float) Nz / 2) * ((float) Nz / 2) - ((float) Nz - 1) * ((float) Nz / 2));
-    float b = -a * ((float) Nz - 1);
 
-    for (int j = 0; j < Ny; j++) {
-        for (int i = 0; i < Nx; i++) {
-            for (int k = 0; k < Nz; k++) {
-//                p[i][j][k] = ((1 / (1 - (float) Nz)) * (float) k + 1) * 1;
-//                u[i][j][k] = ((1 / (1 - (float) Nz)) * (float) k + 1) * 1;
-//                v[i][j][k] = ((1 / (1 - (float) Nz)) * (float) k + 1) * 1;
-//                w[i][j][k] = ((1 / (1 - (float) Nz)) * (float) k + 1) * 1;
-                // ((1/ / (1 - (float) Nz)) * (float) k + 1) * 0.1;
-//                a * k * k + b * k;
-            }
-        }
-    }
+    read_data_into_array(u, "u.txt");
+    read_data_into_array(v, "v.txt");
+    read_data_into_array(w, "w.txt");
+    read_data_into_array(p, "p.txt");
+
+//    float a = 1 / (((float) Nz / 2) * ((float) Nz / 2) - ((float) Nz - 1) * ((float) Nz / 2));
+//    float b = -a * ((float) Nz - 1);
+//
+//    for (int j = 0; j < Ny; j++) {
+//        for (int i = 0; i < Nx; i++) {
+//            for (int k = 0; k < Nz; k++) {
+////                p[i][j][k] = ((1 / (1 - (float) Nz)) * (float) k + 1) * 1;
+////                u[i][j][k] = ((1 / (1 - (float) Nz)) * (float) k + 1) * 1;
+////                v[i][j][k] = ((1 / (1 - (float) Nz)) * (float) k + 1) * 1;
+////                w[i][j][k] = ((1 / (1 - (float) Nz)) * (float) k + 1) * 1;
+//                // ((1/ / (1 - (float) Nz)) * (float) k + 1) * 0.1;
+////                a * k * k + b * k;
+//            }
+//        }
+//    }
     //u[Nx/2][Ny/2][Nz/2] = 0.99;
+
+    // read from file
+
+
 }
 
 

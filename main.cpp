@@ -5,6 +5,7 @@
 #include <iostream>
 
 int main() {
+
     if (!read_parameters() or !dump_simulation_parameters()) {
         std::cerr << "Error: Cannot handle simulation params.\n";
         return -1;
