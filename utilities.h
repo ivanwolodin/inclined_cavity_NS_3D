@@ -11,6 +11,16 @@ using std::ofstream;
 using std::to_string;
 using std::ifstream;
 
+void read_data_into_array(vector<vector<vector<double> > > &array, string fileName){
+    ifstream inputFile(fileName);        // Input file stream object
+    int i, k;
+    double value;
+
+    while (inputFile >> i >>k >> value){
+        array[i][k] = value;
+    }
+}
+
 void zero_values() {
     for (int i = 0; i < Nx; i++) {
         for (int j = 0; j < Ny; j++) {
@@ -34,23 +44,27 @@ void zero_values() {
 
 void initial_distribution() {
     zero_values();
-    float a = 1 / (((float) Nz / 2) * ((float) Nz / 2) - ((float) Nz - 1) * ((float) Nz / 2));
-    float b = -a * ((float) Nz - 1);
+    read_data_into_array(u, "u.txt");
+    read_data_into_array(v, "v.txt");
+    read_data_into_array(p, "p.txt");
 
-    for (int j = 0; j < Ny; j++) {
-        for (int i = 0; i < Nx; i++) {
-//            for (int k = 0; k < Nz; k++) {
-            p[i][j] = 0;//((1 / (1 - (float) Ny)) * (float) j + 1) * 1;
-            u[i][j] = 0;//((1 / (1 - (float) Ny)) * (float) j + 1) * 1;
-            v[i][j] = 0;//((1 / (1 - (float) Ny)) * (float) j + 1) * 1;
-//                w[i][j] = ((1 / (1 - (float) Ny)) * (float) j + 1) * 1;
-            // ((1/ / (1 - (float) Nz)) * (float) k + 1) * 0.1;
-//                a * k * k + b * k;
-//            }
-        }
-    }
-//    p[Nx/2][Ny/2][Nz/2] = 0.01;
-//    u[Nx/2][Ny/2][Nz/2] = 0.99;
+//    float a = 1 / (((float) Nz / 2) * ((float) Nz / 2) - ((float) Nz - 1) * ((float) Nz / 2));
+//    float b = -a * ((float) Nz - 1);
+//
+//    for (int j = 0; j < Ny; j++) {
+//        for (int i = 0; i < Nx; i++) {
+////            for (int k = 0; k < Nz; k++) {
+//            p[i][j] = 0;//((1 / (1 - (float) Ny)) * (float) j + 1) * 1;
+//            u[i][j] = 0;//((1 / (1 - (float) Ny)) * (float) j + 1) * 1;
+//            v[i][j] = 0;//((1 / (1 - (float) Ny)) * (float) j + 1) * 1;
+////                w[i][j] = ((1 / (1 - (float) Ny)) * (float) j + 1) * 1;
+//            // ((1/ / (1 - (float) Nz)) * (float) k + 1) * 0.1;
+////                a * k * k + b * k;
+////            }
+//        }
+//    }
+////    p[Nx/2][Ny/2][Nz/2] = 0.01;
+////    u[Nx/2][Ny/2][Nz/2] = 0.99;
 }
 
 
