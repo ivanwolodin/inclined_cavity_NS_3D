@@ -12,14 +12,14 @@ using std::to_string;
 using std::ifstream;
 using std:: stringstream;
 
-void read_data_into_array(vector<vector<vector<double> > > &array, string fileName){
-ifstream inputFile(fileName);        // Input file stream object
-int i, k;
-double value;
+void read_data_into_array(vector<vector<double> > &array, string fileName){
+    ifstream inputFile(fileName);        // Input file stream object
+    int i, k;
+    double value;
 
-while (inputFile >> i >>k >> value){
-array[i][k] = value;
-}
+    while (inputFile >> i >>k >> value){
+        array[i][k] = value;
+    }
 }
 
 void zero_values() {
@@ -101,9 +101,7 @@ void output_whole_field(const string &fname, const string &step, vector<vector<d
         for (int i = 0; i < Nx; i++) {
             for (int j = 0; j < Ny; j++) {
                 myfile << "i=" << i << endl;
-                for (int j = 0; k < Ny; j++) {
                     myfile << current_vector[i][j] << " " << endl;
-                }
                 myfile << "_________________________" << endl;
             }
         }
@@ -115,8 +113,8 @@ void output_whole_field(const string &fname, const string &step, vector<vector<d
 
 bool check_velocity_convergence() {
     if (check_convergence(u, u_previous, velocity_calculation_precision) and
-        check_convergence(v, v_previous, velocity_calculation_precision) and
-        check_convergence(w, w_previous, velocity_calculation_precision)) {
+        check_convergence(v, v_previous, velocity_calculation_precision)
+        ) {
         return true;
     } else {
         return false;
@@ -127,7 +125,6 @@ bool check_velocity_convergence() {
 void output_all_fields(int &step) {
     output_whole_field(" whole_u.txt", to_string(step), u);
     output_whole_field(" whole_v.txt", to_string(step), v);
-    output_whole_field(" whole_w.txt", to_string(step), w);
     output_whole_field(" whole_p.txt", to_string(step), p);
 }
 

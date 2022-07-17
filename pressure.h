@@ -52,8 +52,8 @@ void calculate_pressure(int mainStep) {
                                   (dy * dy)
                           ) -
                           VELOCITY_PART * (pressure_time / dt) * (
-                                  (u_auxilliary[i + 1][j][k] - u_auxilliary[i - 1][j][k]) / (2 * dx) +
-                                  (v_auxilliary[i][j + 1][k] - v_auxilliary[i][j - 1][k]) / (2 * dy)
+                                  (u_auxilliary[i + 1][j] - u_auxilliary[i - 1][j]) / (2 * dx) +
+                                  (v_auxilliary[i][j + 1] - v_auxilliary[i][j - 1]) / (2 * dy)
                           );
             }
         }

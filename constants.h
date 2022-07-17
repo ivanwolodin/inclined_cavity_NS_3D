@@ -19,7 +19,7 @@ float dy = (float) 2 / Ny;
 float dt = 0.001;
 
 float pressure_part =
-        (dx * dx * dy * dy * dz * dz) / (2 * (dy * dy * dz * dz + dx * dx * dz * dz + dx * dx * dy * dy));
+        (dx * dx * dy * dy) / (2 * (dy * dy + dx * dx + dx * dx * dy * dy));
 
 float gravity = 0.000001;
 
