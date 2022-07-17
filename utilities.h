@@ -99,11 +99,11 @@ void output_whole_field(const string &fname, const string &step, vector<vector<d
         myfile << "Re=" << Re << endl;
 
         for (int i = 0; i < Nx; i++) {
+            myfile << "i=" << i << endl;
             for (int j = 0; j < Ny; j++) {
-                myfile << "i=" << i << endl;
-                    myfile << current_vector[i][j] << " " << endl;
-                myfile << "_________________________" << endl;
+                myfile << current_vector[i][j] << " " << endl;
             }
+            myfile << "_________________________" << endl;
         }
         myfile.close();
 
