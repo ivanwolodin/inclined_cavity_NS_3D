@@ -102,8 +102,12 @@ void output_whole_field(const string &fname, const string &step, vector<vector<d
             myfile << "i=" << i << endl;
             for (int j = 0; j < Ny; j++) {
                 myfile << current_vector[i][j] << " " << endl;
+<<<<<<< HEAD
                 myfile << "_________________________" << endl;
+=======
+>>>>>>> 53ede40d2084f0181415817708928364470240b8
             }
+            myfile << "_________________________" << endl;
         }
         myfile.close();
 
