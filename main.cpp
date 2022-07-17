@@ -47,7 +47,7 @@ int main() {
             output_all_fields(step);
         }
 
-        if (step % 10000000 == 0) {
+        if (step % 100000000 == 0) {
             return 0;
         }
 
