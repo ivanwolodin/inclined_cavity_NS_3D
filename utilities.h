@@ -10,6 +10,7 @@ using std::string;
 using std::ofstream;
 using std::to_string;
 using std::ifstream;
+using std:: stringstream;
 
 void read_data_into_array(vector<vector<vector<double> > > &array, string fileName){
     ifstream inputFile(fileName);        // Input file stream object
