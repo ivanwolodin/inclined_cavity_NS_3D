@@ -25,16 +25,16 @@ array[i][k] = value;
 void zero_values() {
     for (int i = 0; i < Nx; i++) {
         for (int j = 0; j < Ny; j++) {
-                u_auxilliary[i][j][k] = 0.0;
-                v_auxilliary[i][j][k] = 0.0;
+                u_auxilliary[i][j] = 0.0;
+                v_auxilliary[i][j] = 0.0;
 
-                u_previous[i][j][k] = 0.0;
-                v_previous[i][j][k] = 0.0;
+                u_previous[i][j] = 0.0;
+                v_previous[i][j] = 0.0;
 
-                u[i][j][k] = 0.0;
-                v[i][j][k] = 0.0;
+                u[i][j] = 0.0;
+                v[i][j] = 0.0;
 
-                p[i][j][k] = 0.0;
+                p[i][j] = 0.0;
         }
     }
 }
