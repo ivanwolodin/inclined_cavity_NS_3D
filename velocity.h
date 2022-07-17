@@ -30,10 +30,10 @@ void calculate_Nx_auxiliary_velocity() {
         ) -
                                   NONLINEAR * (
                                           (dt / dx) *
-                                          (u[1][j][k] * v[1][j][k] - u[Nx - 1][j][k] * v[Nx - 1][j][k]) +
+                                          (u[1][j] * v[1][j] - u[Nx - 1][j] * v[Nx - 1][j]) +
 
-                                          (dt / dy) * (v[Nx - 1][j + 1][k] * v[Nx - 1][j + 1][k] -
-                                                       v[Nx - 1][j][k] * v[Nx - 1][j][k])
+                                          (dt / dy) * (v[Nx - 1][j + 1] * v[Nx - 1][j + 1] -
+                                                       v[Nx - 1][j] * v[Nx - 1][j])
                                   );
     }
 
