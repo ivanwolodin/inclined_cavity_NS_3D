@@ -18,10 +18,10 @@ void read_data_into_array(vector<vector<double> > &array, string fileName){
     double value;
 
     while (inputFile >> i >>k >> value){
-        array[i][k] = value;
         if(i == Nx or k == Ny){
             continue;
         }
+        array[i][k] = value;
     }
     cout<<"Done: "<<fileName<<endl;
 }
