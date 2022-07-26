@@ -23,6 +23,7 @@ void read_data_into_array(vector<vector<double> > &array, string fileName){
             continue;
         }
     }
+    cout<<"Done: "<<fileName<<endl;
 }
 
 void zero_values() {
