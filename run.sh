@@ -25,6 +25,11 @@ g++ -o ${programname} main.cpp
 
 echo "Moving to exec folder..."
 cp params.txt "${destination}/${dirname}"
+
+cp p.txt "${destination}/${dirname}"
+cp u.txt "${destination}/${dirname}"
+cp v.txt "${destination}/${dirname}"
+
 mv ${programname} "${destination}/${dirname}"
 cd ${destination}/${dirname} || { echo "No such dir"; exit 1; }
 

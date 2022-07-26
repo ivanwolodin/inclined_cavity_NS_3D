@@ -20,6 +20,11 @@ void read_data_into_array(vector<vector<double> > &array, string fileName){
     while (inputFile >> i >>k >> value){
         array[i][k] = value;
     }
+    for (int i = 0; i < Nx; i++) {
+        for (int j = 0; j < Ny; j++) {
+            cout<<array[i][j]<<endl;
+        }
+    }
 }
 
 void zero_values() {
