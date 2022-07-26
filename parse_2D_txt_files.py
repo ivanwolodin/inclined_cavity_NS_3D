@@ -16,7 +16,7 @@ def parse_file(filename: str = ""):
             try:
                 value = float(line)
                 # print(i[1], j[1], k, value)
-                f.write("{} {} {} \n".format(i[1], k, value))
+                f.write("{} {} {} \n".format(i, k, value))
 #                print("{} {} {} \n".format(i[1], k, value))
                 k += 1
 
