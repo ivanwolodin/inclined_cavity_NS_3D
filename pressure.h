@@ -43,11 +43,11 @@ void calculate_pressure(int mainStep) {
                 p[i][j] = p_previous[i][j] +
                           pressure_pseudo_time * (
                                   (p_previous[i - 1][j] - 2 * p_previous[i][j] + p_previous[i + 1][j]) / (dx * dx) +
-                                  (p_previous[i][j - 1] - 2 * p_previous[i][j] + p_previous[i][j + 1]) / (dy * dy)
+                                  (p_previous[i][j - 1] - 2 * p_previous[i][j] + p_previous[i][j + 1]) / (dy[j] * dy[j])
                           ) -
                           VELOCITY_PART * (pressure_pseudo_time / dt) * (
                                   (u_auxilliary[i][j] - u_auxilliary[i - 1][j]) / (dx) +
-                                  (v_auxilliary[i][j] - v_auxilliary[i][j - 1]) / (dy)
+                                  (v_auxilliary[i][j] - v_auxilliary[i][j - 1]) / (dy[j])
                           );
 
             }

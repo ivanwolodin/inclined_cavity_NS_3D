@@ -51,7 +51,7 @@ void auxiliary_velocity_boundary() {
                 u[1][j] +
                 (dt / Re) * (
                         (u[2][j] - 2 * u[1][j] + u[0][j]) / (dx * dx) +
-                        (u[1][j + 1] - 2 * u[1][j] + u[1][j - 1]) / (dy * dy)
+                        (u[1][j + 1] - 2 * u[1][j] + u[1][j - 1]) / (dy[j] * dy[j])
                 ) -
                 NONLINEAR * (
                         (dt / dx) *
@@ -63,7 +63,7 @@ void auxiliary_velocity_boundary() {
                                 0.5 * (u[1][j] + u[0][j])
                         ) +
 
-                        (dt / dy) *
+                        (dt / dy[j]) *
                         (
                                 0.5 * (u[1][j + 1] + u[1][j]) *
                                 0.5 * (v[2][j] + v[1][j]) -
@@ -91,8 +91,8 @@ void auxiliary_velocity_boundary() {
 //cout<<"4"<<endl;
     // bottom and upper walls
     for (int i = 1; i <= Nx - 1; i++) {
-        v_auxilliary[i][0] = 0 + (dt / (dy)) * (p[i][1] - p[i][0]);
-        v_auxilliary[i][Ny - 1] = 0 + (dt / (dy)) * (p[i][Ny] - p[i][Ny - 1]);
+        v_auxilliary[i][0] = 0 + (dt / (dy[j])) * (p[i][1] - p[i][0]);
+        v_auxilliary[i][Ny - 1] = 0 + (dt / (dy[j])) * (p[i][Ny] - p[i][Ny - 1]);
     }
 //cout<<"5"<<endl;
     // left and right walls
@@ -116,7 +116,7 @@ void calculate_auxiliary_velocity() {
                     u[i + 1][j] +
                     (dt / Re) * (
                             (u[i + 2][j] - 2 * u[i + 1][j] + u[i][j]) / (dx * dx) +
-                            (u[i + 1][j + 1] - 2 * u[i + 1][j] + u[i + 1][j - 1]) / (dy * dy)
+                            (u[i + 1][j + 1] - 2 * u[i + 1][j] + u[i + 1][j - 1]) / (dy[j] * dy[j])
                     ) -
                     NONLINEAR * (
                             (dt / dx) *
@@ -128,7 +128,7 @@ void calculate_auxiliary_velocity() {
                                     0.5 * (u[i][j] + u[i + 1][j])
                             ) +
 
-                            (dt / dy) *
+                            (dt / dy[j]) *
                             (
                                     0.5 * (u[i + 1][j + 1] + u[i + 1][j]) *
                                     0.5 * (v[i + 1][j] + v[i][j]) -
@@ -148,7 +148,7 @@ void calculate_auxiliary_velocity() {
                     v[i][j] +
                     (dt / Re) * (
                             (v[i + 1][j] - 2 * v[i][j] + v[i - 1][j]) / (dx * dx) +
-                            (v[i][j + 1] - 2 * v[i][j] + v[i][j - 1]) / (dy * dy)
+                            (v[i][j + 1] - 2 * v[i][j] + v[i][j - 1]) / (dy[j] * dy[j])
                     ) -
                     NONLINEAR * (
                             (dt / dx) *
@@ -160,7 +160,7 @@ void calculate_auxiliary_velocity() {
                                     0.5 * (v[i][j] + v[i - 1][j])
                             ) +
 
-                            (dt / dy) *
+                            (dt / dy[j]) *
                             (
                                     0.5 * (v[i][j + 1] + v[i][j]) *
                                     0.5 * (v[i][j + 1] + v[i][j]) -
@@ -189,7 +189,7 @@ void calculate_velocity() {
 
     for (int i = 1; i <= Nx - 1; i++) {
         for (int j = 1; j < Ny - 1; j++) {
-            v[i][j] = v_auxilliary[i][j] - (dt / (dy)) * (p[i][j + 1] - p[i][j]);
+            v[i][j] = v_auxilliary[i][j] - (dt / (dy[j])) * (p[i][j + 1] - p[i][j]);
         }
     }
 
