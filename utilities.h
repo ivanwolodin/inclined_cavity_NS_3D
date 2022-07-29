@@ -252,7 +252,19 @@ bool read_parameters() {
 
         if (beforeEqual == "Ny") {
             Ny = std::stoi(afterEqual);
-            dy = (float) 1 / Ny;
+//            dy = (float) 1 / Ny;
+            dy.resize(Ny + 1);
+            for (int j = 0; j < Ny + 1; j++) {
+                if (j <= 70) {
+                    dy[j] = 0.001;
+                }
+                if (j > 70 && j <= 250) {
+                    dy[j] = 0.002;
+                }
+                if (j > 250) {
+                    dy[j] = 0.001;
+                }
+            }
         }
 
         if (beforeEqual == "Nz") {
@@ -314,7 +326,12 @@ bool dump_simulation_parameters() {
         myfile << "gravity=" << gravity << endl;
 
         myfile << "dx=" << dx << endl;
-        myfile << "dy=" << dy << endl;
+//        myfile << "dy=" << dy << endl;
+
+        for (int j = 0; j < Ny + 1; j++) {
+            myfile << "dy["<<j<<"]= " << dy[j] << endl;
+        }
+
         myfile << "dz=" << dz << endl;
         myfile << "poisson_precision=" << pressure_calculation_precision << endl;
         myfile << "velocity_precision=" << velocity_calculation_precision << endl;
@@ -329,7 +346,7 @@ bool dump_simulation_parameters() {
             cout << "Nz=" << Nz << endl;
             cout << "dt=" << dt << endl;
             cout << "dx=" << dx << endl;
-            cout << "dy=" << dy << endl;
+//            cout << "dy=" << dy << endl;
             cout << "dz=" << dz << endl;
             cout << "gravity=" << gravity << endl;
 //            cout << "pressure_part=" << pressure_part << endl;
@@ -378,14 +395,15 @@ void output_averaged_veloicty(int mainStep) {
 //            }
 //            myfile << "_________________________" << endl;
 //        }
+        float sum = 0;
+
         for (int j = 0; j < Ny; j++) {
-            float sum = 0;
             for (int i = 0; i < Nx + 1; i++) {
                 sum = sum + v[i][j];
             }
-            sum = (sum / Nx );
-	    myfile <<"j = "<< j << " "<< sum << " " << endl;
+//            sum = (sum / Nx );
         }
+        myfile <<"summ = "<< sum << endl;
         myfile.close();
     } else cout << "Unable to open file";
 

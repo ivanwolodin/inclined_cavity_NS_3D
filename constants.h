@@ -13,7 +13,10 @@ const int k = 1;
 float Re = 2;
 
 float dx = (float) 1 / Nx;
-float dy = (float) 1 / Ny;
+//float dy = (float) 1 / Ny;
+
+vector< double> dy;
+
 float dz = 1; //(float) 1 / Nz;
 
 float dt = 0.001;
