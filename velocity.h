@@ -91,7 +91,7 @@ void auxiliary_velocity_boundary() {
 //cout<<"4"<<endl;
     // bottom and upper walls
     for (int i = 1; i <= Nx - 1; i++) {
-        v_auxilliary[i][0] = 0 + (dt / (dy[j])) * (p[i][1] - p[i][0]);
+        v_auxilliary[i][0] = 0 + (dt / (dy[0])) * (p[i][1] - p[i][0]);
         v_auxilliary[i][Ny - 1] = 0 + (dt / (dy[Ny - 1])) * (p[i][Ny] - p[i][Ny - 1]);
     }
 //cout<<"5"<<endl;
