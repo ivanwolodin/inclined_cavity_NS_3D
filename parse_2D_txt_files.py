@@ -1,6 +1,6 @@
 import pathlib
 
-step_to_parse = "37000"
+step_to_parse = "6000000"
 files_to_parse = list(pathlib.Path('.').glob(f'*{step_to_parse}*.txt'))
 
 
