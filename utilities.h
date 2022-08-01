@@ -22,7 +22,7 @@ void read_data_into_array(vector<vector<double> >  &array, string fileName){
             array[i][j] = array[i][199];
         }
         if (j > 500){
-            array[i][j] = array[i][j - 300]
+            array[i][j] = array[i][j - 300];
         }
         else {
             array[i][j] = value;
