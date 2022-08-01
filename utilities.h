@@ -12,12 +12,17 @@ using std::to_string;
 using std::ifstream;
 using std:: stringstream;
 
-void read_data_into_array(vector<vector<double> >  &array, string fileName){
+void read_data_into_array(vector<vector<double> >  &array, string fileName, int X, int Y){
     ifstream inputFile(fileName);        // Input file stream object
     int i, j;
     double value;
 
     vector<vector<double>  > temporary;
+    temporary.resize(X);
+
+    for (int i = 0; i < X; i++) {
+        temporary[i].resize(Y);
+    }
 
     while (inputFile >> i >>j >> value){
         temporary[i][j] = value;
@@ -59,9 +64,9 @@ void zero_values() {
 
 void initial_distribution() {
     zero_values();
-    read_data_into_array(u, "u.txt");
-    read_data_into_array(v, "v.txt");
-    read_data_into_array(p, "p.txt");
+    read_data_into_array(u, "u.txt", Nx + 2, Ny + 1);
+    read_data_into_array(v, "v.txt", Nx + 1, Ny);
+    read_data_into_array(p, "p.txt", Nx + 1, Ny + 1);
 
 //    float a = 1 / (((float) Nz / 2) * ((float) Nz / 2) - ((float) Nz - 1) * ((float) Nz / 2));
 //    float b = -a * ((float) Nz - 1);
@@ -270,13 +275,13 @@ bool read_parameters() {
             dy.resize(Ny + 1);
             for (int j = 0; j < Ny + 1; j++) {
                 if (j <= 70) {
-                    dy[j] = 0.001;
+                    dy[j] = 0.002;
                 }
                 if (j > 70 && j <= 250) {
                     dy[j] = 0.002;
                 }
                 if (j > 250) {
-                    dy[j] = 0.001;
+                    dy[j] = 0.002;
                 }
             }
         }
