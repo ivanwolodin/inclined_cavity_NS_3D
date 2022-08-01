@@ -17,15 +17,21 @@ void read_data_into_array(vector<vector<double> >  &array, string fileName){
     int i, j;
     double value;
 
+    vector<vector<double>  > temporary;
+
+    while (inputFile >> i >>j >> value){
+        temporary[i][j] = value;
+    }
+
     while (inputFile >> i >>j >> value){
         if (j >= 200 and j<= 500) {
-            array[i][j] = array[i][199];
+            array[i][j] = temporary[i][199];
         }
         if (j > 500){
-            array[i][j] = array[i][j - 300];
+            array[i][j] = temporary[i][j - 300];
         }
         else {
-            array[i][j] = value;
+            array[i][j] = temporary[i][j];
         }
     }
 }
