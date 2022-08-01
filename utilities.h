@@ -14,11 +14,19 @@ using std:: stringstream;
 
 void read_data_into_array(vector<vector<double> >  &array, string fileName){
     ifstream inputFile(fileName);        // Input file stream object
-    int i, k;
+    int i, j;
     double value;
 
-    while (inputFile >> i >>k >> value){
-        array[i][k] = value;
+    while (inputFile >> i >>j >> value){
+        if (j >= 200 and j<= 500) {
+            array[i][j] = array[i][199];
+        }
+        if (j > 500){
+            array[i][j] = array[i][j - 300]
+        }
+        else {
+            array[i][j] = value;
+        }
     }
 }
 
