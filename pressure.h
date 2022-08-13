@@ -3,6 +3,7 @@
 
 #include "constants.h"
 #include "utilities.h"
+#include <omp.h>
 
 const int VELOCITY_PART = 1;
 
@@ -12,12 +13,14 @@ using std::to_string;
 void pressure_boundary() {
 
     // left and right walls
+    #pragma omp parallel for
     for (int j = 1; j <= Ny - 1; j++) {
         p[0][j] = p[Nx - 1][j];
         p[Nx][j] = p[1][j];
     }
 
     // upper and bottom walls
+    #pragma omp parallel for
     for (int i = 1; i <= Nx - 1; i++) {
         p[i][0] = -p[i][1];
         p[i][Ny] = -p[i][Ny - 1];
@@ -37,17 +40,18 @@ void calculate_pressure(int mainStep) {
 //        cout<<pressure_pseudo_time;
         p_previous = copy_previous(p_previous, p, Nx + 1, Ny + 1);
 //cout<<"p1"<<endl;
+        #pragma omp parallel for
         for (int i = 1; i <= Nx - 1; i++) {
             for (int j = 1; j <= Ny - 1; j++) {
 //cout<<i<<" "<<j<<endl;
                 p[i][j] = p_previous[i][j] +
                           pressure_pseudo_time * (
                                   (p_previous[i - 1][j] - 2 * p_previous[i][j] + p_previous[i + 1][j]) / (dx * dx) +
-                                  (p_previous[i][j - 1] - 2 * p_previous[i][j] + p_previous[i][j + 1]) / (dy[j] * dy[j])
+                                  (p_previous[i][j - 1] - 2 * p_previous[i][j] + p_previous[i][j + 1]) * dydy2[j]
                           ) -
                           VELOCITY_PART * (pressure_pseudo_time / dt) * (
                                   (u_auxilliary[i][j] - u_auxilliary[i - 1][j]) / (dx) +
-                                  (v_auxilliary[i][j] - v_auxilliary[i][j - 1]) / (dy[j])
+                                  (v_auxilliary[i][j] - v_auxilliary[i][j - 1]) * dy1[j]
                           );
 
             }

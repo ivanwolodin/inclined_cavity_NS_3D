@@ -259,6 +259,19 @@ void resize_arrays() {
 //    resize_array(w_auxilliary, Nx, Ny, Nz);
 }
 
+void prepare_optimised_arrays() {
+    for (int j = 0; j < Ny + 1; j++) {
+        dtdy2[j] = dt / dy[j];
+    }
+
+    for (int j = 0; j < Ny + 1; j++) {
+        dy1[j] = (floatT) 1 / dy[j];
+    }
+
+    for (int j = 0; j < Ny + 1; j++) {
+        dydy2[j] = (floatT) 1 / (dy[j] * dy[j]);
+    }
+}
 
 bool read_parameters() {
     ifstream in("params.txt");
@@ -287,13 +300,13 @@ bool read_parameters() {
             dy.resize(Ny + 1);
             for (int j = 0; j < Ny + 1; j++) {
                 if (j <= 70) {
-                    dy[j] = 0.002;
+                    dy[j] = 0.001;
                 }
                 if (j > 70 && j <= 250) {
                     dy[j] = 0.002;
                 }
                 if (j > 250) {
-                    dy[j] = 0.002;
+                    dy[j] = 0.001;
                 }
             }
         }
@@ -328,6 +341,7 @@ bool read_parameters() {
 //    pressure_part =
 //            (dx * dx * dy * dy * dz * dz) / (2 * (dy * dy * dz * dz + dx * dx * dz * dz + dx * dx * dy * dy));
     resize_arrays();
+    prepare_optimised_arrays();
 
     return true;
 }
@@ -403,7 +417,7 @@ void output_poisson_solution_dynamics(int mainStep, int poissonStep) {
 
 }
 
-void output_averaged_veloicty(int mainStep) {
+void output_integral_v(int mainStep) {
 
     time_t t = time(0);   // get time now
     struct tm *now = localtime(&t);
@@ -412,13 +426,50 @@ void output_averaged_veloicty(int mainStep) {
     strftime(buffer, 80, "%d-%m %H.%M", now);
 
     ofstream myfile;
-    myfile.open(string("res/") + buffer + " step=" + to_string(mainStep) + " " + "averaged_velocity");
+    myfile.open(string("res/") + buffer + " step=" + to_string(mainStep) + " " + "integral_v");
 
     if (myfile.is_open()) {
 
        
         myfile << "mainStep=" << mainStep << endl;
         
+//        for (int i = 0; i < X; i++) {
+//            myfile << "i=" << i << "  "<< endl;
+//            for (int j = 0; j < Y; j++) {
+//                myfile << current_vector[i][j] << " " << endl;
+//            }
+//            myfile << "_________________________" << endl;
+//        }
+        float sum = 0;
+
+        for (int j = 0; j < Ny; j++) {
+            for (int i = 0; i < Nx + 1; i++) {
+                sum = sum + v[i][j];
+            }
+//            sum = (sum / Nx );
+        }
+        myfile <<"summ = "<< sum << endl;
+        myfile.close();
+    } else cout << "Unable to open file";
+
+}
+
+void output_averaged_u(int mainStep) {
+
+    time_t t = time(0);   // get time now
+    struct tm *now = localtime(&t);
+
+    char buffer[80];
+    strftime(buffer, 80, "%d-%m %H.%M", now);
+
+    ofstream myfile;
+    myfile.open(string("res/") + buffer + " step=" + to_string(mainStep) + " " + "averaged_u");
+
+    if (myfile.is_open()) {
+
+
+        myfile << "mainStep=" << mainStep << endl;
+
 //        for (int i = 0; i < X; i++) {
 //            myfile << "i=" << i << "  "<< endl;
 //            for (int j = 0; j < Y; j++) {

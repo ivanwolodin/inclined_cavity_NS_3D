@@ -21,7 +21,7 @@ mkdir "${destination}/${dirname}/res"
 
 echo "Compiling..."
 programname="$(timestamp).out"
-g++ -o ${programname} main.cpp
+g++ -o3 -o ${programname} main.cpp -fopenmp
 
 echo "Moving to exec folder..."
 cp params.txt "${destination}/${dirname}"
