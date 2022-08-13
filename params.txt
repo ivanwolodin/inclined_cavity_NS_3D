@@ -1,9 +1,9 @@
 Re=2500
 Nx=250
 Ny=500
-dt=0.000001
+dt=0.000005
 gravity=0.00001
 debug=1
 velocity_calculation_precision=0.000001
 pressure_calculation_precision=0.000001
-pressure_pseudo_time=0.000001
+pressure_pseudo_time=0.0000001

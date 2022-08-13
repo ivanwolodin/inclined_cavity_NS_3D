@@ -11,7 +11,7 @@ using std::ofstream;
 using std::to_string;
 using std::ifstream;
 using std:: stringstream;
-
+/*
 void read_data_into_array(vector<vector<double> >  &array, string fileName, int X, int Y){
     ifstream inputFile(fileName);        // Input file stream object
     int i, j;
@@ -41,6 +41,17 @@ void read_data_into_array(vector<vector<double> >  &array, string fileName, int 
         }
     }
 }
+ */
+
+void read_data_into_array(vector<vector<double> >  &array, string fileName){
+    ifstream inputFile(fileName);        // Input file stream object
+    int i, k;
+    double value;
+
+    while (inputFile >> i >>k >> value){
+        array[i][k] = value;
+    }
+}
 
 void zero_values() {
     for (int i = 0; i < Nx; i++) {
@@ -65,9 +76,9 @@ void zero_values() {
 
 void initial_distribution() {
     zero_values();
-    read_data_into_array(u, "u.txt", Nx + 2, Ny + 1);
-    read_data_into_array(v, "v.txt", Nx + 1, Ny);
-    read_data_into_array(p, "p.txt", Nx + 1, Ny + 1);
+    read_data_into_array(u, "u.txt");
+    read_data_into_array(v, "v.txt");
+    read_data_into_array(p, "p.txt");
 
 //    float a = 1 / (((float) Nz / 2) * ((float) Nz / 2) - ((float) Nz - 1) * ((float) Nz / 2));
 //    float b = -a * ((float) Nz - 1);
