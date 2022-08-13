@@ -260,6 +260,11 @@ void resize_arrays() {
 }
 
 void prepare_optimised_arrays() {
+
+    dtdy2.resize(Ny + 1);
+    dy1.resize(Ny + 1);
+    dydy2.resize(Ny + 1);
+
     for (int j = 0; j < Ny + 1; j++) {
         dtdy2[j] = dt / dy[j];
     }
